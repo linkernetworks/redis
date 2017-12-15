@@ -20,15 +20,15 @@ func (s *RedisService) Do(cmd string, args ...interface{}) (interface{}, error) 
 func NewService(cf *config.RedisConfig) *RedisService {
 	addr := cf.Addr()
 	return &RedisService{
-		Url:  url,
+		Url:  addr,
 		Pool: NewPool(addr),
 	}
 }
 
-func NewPool(url string) *redis.Pool {
+func NewPool(addr string) *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
-		Dial:        func() (redis.Conn, error) { return redis.Dial("tcp", url) },
+		Dial:        func() (redis.Conn, error) { return redis.Dial("tcp", addr) },
 	}
 }
