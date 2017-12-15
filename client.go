@@ -13,7 +13,7 @@ const (
 	KeepAliveKeyPattern = "keepalive:*"
 )
 
-func (service *RedisService) RemoveExpiredClients() {
+func (service *Service) RemoveExpiredClients() {
 	c := service.Pool.Get()
 	defer c.Close()
 

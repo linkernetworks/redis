@@ -6,20 +6,20 @@ import (
 	"time"
 )
 
-type RedisService struct {
+type Service struct {
 	Url  string
 	Pool *redis.Pool
 }
 
-func (s *RedisService) Do(cmd string, args ...interface{}) (interface{}, error) {
+func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
 	c := s.Pool.Get()
 	defer c.Close()
 	return c.Do(cmd, args...)
 }
 
-func NewService(cf *config.RedisConfig) *RedisService {
+func NewService(cf *config.RedisConfig) *Service {
 	addr := cf.Addr()
-	return &RedisService{
+	return &Service{
 		Url:  addr,
 		Pool: NewPool(addr),
 	}
