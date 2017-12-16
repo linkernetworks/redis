@@ -2,6 +2,7 @@ package redis
 
 import (
 	"bitbucket.org/linkernetworks/aurora/src/config"
+	"encoding/json"
 	"github.com/garyburd/redigo/redis"
 	"time"
 )
@@ -9,6 +10,30 @@ import (
 type Service struct {
 	Url  string
 	Pool *redis.Pool
+}
+
+func (s *Service) SetJSON(key string, m interface{}) error {
+	c := s.Pool.Get()
+	defer c.Close()
+
+	bytes, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+	_, err := c.Do("SET", key, bytes)
+	return err
+}
+
+func (s *Service) PublishJSON(key string, m interface{}) error {
+	c := s.Pool.Get()
+	defer c.Close()
+
+	bytes, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+	_, err := c.Do("PUBLISH", key, bytes)
+	return err
 }
 
 func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
