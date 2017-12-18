@@ -24,6 +24,16 @@ func (s *Service) SetJSON(key string, m interface{}) error {
 	return err
 }
 
+func (s *Service) PublishAndSetJSON(key string, m interface{}) error {
+	if err := s.SetJSON(key, m); err != nil {
+		return err
+	}
+	if err := s.PublishJSON(key, m); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *Service) PublishJSON(key string, m interface{}) error {
 	c := s.Pool.Get()
 	defer c.Close()
