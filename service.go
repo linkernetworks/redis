@@ -20,7 +20,7 @@ func (s *Service) SetJSON(key string, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	_, err := c.Do("SET", key, bytes)
+	_, err = c.Do("SET", key, bytes)
 	return err
 }
 
@@ -32,7 +32,7 @@ func (s *Service) PublishJSON(key string, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	_, err := c.Do("PUBLISH", key, bytes)
+	_, err = c.Do("PUBLISH", key, bytes)
 	return err
 }
 
