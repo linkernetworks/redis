@@ -1,9 +1,10 @@
 package redis
 
 import (
-	"github.com/garyburd/redigo/redis"
 	"log"
 	"strings"
+
+	"github.com/garyburd/redigo/redis"
 )
 
 const (
@@ -13,29 +14,28 @@ const (
 	KeepAliveKeyPattern = "keepalive:*"
 )
 
-func (service *Service) RemoveExpiredClients() {
+func (service *Service) RemoveExpiredClients() error {
 	c := service.Pool.Get()
 	defer c.Close()
 
 	// Get all rooms, ex. clients:room1
 	rooms, err := redis.Strings(c.Do("KEYS", ClientsKeyPattern))
 	if err != nil {
-		log.Fatal(err)
-		return
+		return err
 	}
 
 	for _, room := range rooms {
 		// Get all clients in room for each room, ex. clients:room1
 		clients, err := redis.Strings(c.Do("SMEMBERS", room))
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("redis SMEMBERS: %v\n", err)
 			continue
 		}
 
 		// Get live clients
 		keepalives, err := redis.Strings(c.Do("KEYS", KeepAliveKeyPattern))
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("redis do KEYS: %v\n", err)
 			continue
 		}
 
@@ -52,10 +52,11 @@ func (service *Service) RemoveExpiredClients() {
 				log.Printf("client %s is expired \n", client)
 				_, err = c.Do("SREM", room, client)
 				if err != nil {
-					log.Fatal(err)
+					log.Printf("redis SREM: %v\n", err)
 					continue
 				}
 			}
 		}
 	}
+	return nil
 }

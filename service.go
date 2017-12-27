@@ -1,12 +1,14 @@
 package redis
 
 import (
-	"bitbucket.org/linkernetworks/aurora/src/config"
 	"encoding/json"
-	"github.com/garyburd/redigo/redis"
 	"time"
+
+	"bitbucket.org/linkernetworks/aurora/src/config"
+	"github.com/garyburd/redigo/redis"
 )
 
+// TODO refactor: add logger
 type Service struct {
 	Url  string
 	Pool *redis.Pool
