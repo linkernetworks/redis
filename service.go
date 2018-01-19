@@ -14,6 +14,13 @@ type Service struct {
 	Pool *redis.Pool
 }
 
+// GetNumSub return a map of the subscriber with the redis channel key
+func (s *Service) GetNumSub(key string) (map[string]int, error) {
+	c := s.Pool.Get()
+	defer c.Close()
+	return redis.IntMap(c.Do("PUBSUB", "NUMSUB", key))
+}
+
 func (s *Service) SetJSON(key string, m interface{}) error {
 	c := s.Pool.Get()
 	defer c.Close()
