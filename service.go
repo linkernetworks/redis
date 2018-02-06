@@ -61,7 +61,7 @@ func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
 	return c.Do(cmd, args...)
 }
 
-func NewService(cf *config.RedisConfig) *Service {
+func New(cf *config.RedisConfig) *Service {
 	addr := cf.Addr()
 	return &Service{
 		Url:  addr,
