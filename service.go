@@ -67,5 +67,6 @@ func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
 }
 
 func New(cf *config.RedisConfig) *Service {
-	return &Service{Pool: NewPoolFromConfig(cf)}
+	// return &Service{Pool: NewPoolFromConfig(cf)}
+	return &Service{Pool: NewDefaultPool(cf.Addr())}
 }
