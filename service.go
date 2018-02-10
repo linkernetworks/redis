@@ -58,7 +58,12 @@ func (s *Service) PublishJSON(key string, m interface{}) error {
 	return err
 }
 
+// NewWithPool allocates a redis service with a given redis connection pool
+func NewWithPool(pool *redis.Pool) *Service {
+	return &Service{Pool: pool}
+}
+
+// New allocates a redis service with a given redis config
 func New(cf *config.RedisConfig) *Service {
-	// return &Service{Pool: NewPoolFromConfig(cf)}
-	return &Service{Pool: NewDefaultPool(cf.Addr())}
+	return &Service{Pool: NewPoolFromConfig(cf)}
 }
