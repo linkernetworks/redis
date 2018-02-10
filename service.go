@@ -27,7 +27,7 @@ func (s *Service) GetNumSub(key string) (map[string]int, error) {
 }
 
 func (s *Service) SetJSON(key string, m interface{}) error {
-	c := s.Pool.Get()
+	c := s.GetConnection()
 	defer c.Close()
 
 	bytes, err := json.Marshal(m)
@@ -48,8 +48,14 @@ func (s *Service) PublishAndSetJSON(key string, m interface{}) error {
 	return nil
 }
 
+func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
+	c := s.GetConnection()
+	defer c.Close()
+	return c.Do(cmd, args...)
+}
+
 func (s *Service) PublishJSON(key string, m interface{}) error {
-	c := s.Pool.Get()
+	c := s.GetConnection()
 	defer c.Close()
 
 	bytes, err := json.Marshal(m)
@@ -58,12 +64,6 @@ func (s *Service) PublishJSON(key string, m interface{}) error {
 	}
 	_, err = c.Do("PUBLISH", key, bytes)
 	return err
-}
-
-func (s *Service) Do(cmd string, args ...interface{}) (interface{}, error) {
-	c := s.Pool.Get()
-	defer c.Close()
-	return c.Do(cmd, args...)
 }
 
 func New(cf *config.RedisConfig) *Service {
