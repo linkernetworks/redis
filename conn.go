@@ -10,6 +10,14 @@ type Connection struct {
 	redis.Conn
 }
 
+func (c *Connection) SetWithExpire(key string, value interface{}, expire int) (reply interface{}, err error) {
+	return c.Do("SET", key, value, "EX", expire)
+}
+
+func (c *Connection) Set(key string, value interface{}) (reply interface{}, err error) {
+	return c.Do("SET", key, value)
+}
+
 // GetString executes the command "GET" with a given key, and cast the result
 // to go string type
 func (c *Connection) GetString(key string) (val string, err error) {
