@@ -18,14 +18,6 @@ func (s *Service) GetConnection() *Connection {
 	return &Connection{conn}
 }
 
-// GetNumSub return a map of the subscriber with the redis channel key
-// This method should be deprecated
-func (s *Service) GetNumSub(key string) (map[string]int, error) {
-	conn := s.GetConnection()
-	defer conn.Close()
-	return conn.PubSub().NumSub(key)
-}
-
 func (s *Service) SetJSON(key string, m interface{}) error {
 	c := s.GetConnection()
 	defer c.Close()
