@@ -2,6 +2,8 @@ package redis
 
 import (
 	"encoding/json"
+	"log"
+	"time"
 
 	"github.com/garyburd/redigo/redis"
 )
@@ -62,6 +64,26 @@ func (c *Connection) PublishJSON(key string, m interface{}) (err error) {
 	}
 	_, err = c.Do("PUBLISH", key, bytes)
 	return err
+}
+
+func (c *Connection) Ping() (reply interface{}, err error) {
+	reply, err = c.Do("PING")
+	return reply, err
+}
+
+// KeepAlive uses a ticker to ping the connection, this function returns a
+// time.Ticker object.  Be sure to stop the ticker when the connection is not
+// being used.
+func (c *Connection) KeepAlive(interval time.Duration) *time.Ticker {
+	var ticker = time.NewTicker(interval)
+	go func() {
+		for t := range ticker.C {
+			if _, err := c.Ping(); err != nil {
+				log.Printf("redis: failed to ping error=%v at %s\n", t.String())
+			}
+		}
+	}()
+	return ticker
 }
 
 func (c *Connection) PubSub() *PubSubCommandContext {
