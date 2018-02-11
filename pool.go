@@ -14,8 +14,6 @@ func NewPoolFromConfig(cf *config.RedisConfig) *redis.Pool {
 		// the default idle timeout seconds
 		IdleTimeout: 240 * time.Second,
 
-		MaxActive: 500,
-
 		Dial: func() (redis.Conn, error) {
 			return redis.Dial("tcp", cf.Addr())
 		},
