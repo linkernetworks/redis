@@ -20,14 +20,16 @@ func NewPoolFromConfig(cf *config.RedisConfig) *redis.Pool {
 			return redis.Dial("tcp", cf.Addr())
 		},
 	}
-	if cf.Pool.MaxActive > 0 {
-		pool.MaxActive = cf.Pool.MaxActive
-	}
-	if cf.Pool.MaxIdle > 0 {
-		pool.MaxIdle = cf.Pool.MaxIdle
-	}
-	if cf.Pool.IdleTimeout > 0 {
-		pool.IdleTimeout = cf.Pool.IdleTimeout * time.Second
+	if cf.Pool != nil {
+		if cf.Pool.MaxActive > 0 {
+			pool.MaxActive = cf.Pool.MaxActive
+		}
+		if cf.Pool.MaxIdle > 0 {
+			pool.MaxIdle = cf.Pool.MaxIdle
+		}
+		if cf.Pool.IdleTimeout > 0 {
+			pool.IdleTimeout = cf.Pool.IdleTimeout * time.Second
+		}
 	}
 
 	return &pool

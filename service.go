@@ -65,5 +65,8 @@ func NewWithPool(pool *redis.Pool) *Service {
 
 // New allocates a redis service with a given redis config
 func New(cf *config.RedisConfig) *Service {
-	return &Service{Pool: NewPoolFromConfig(cf)}
+	if cf.Pool != nil {
+		return &Service{Pool: NewPoolFromConfig(cf)}
+	}
+	return &Service{Pool: NewDefaultPool(cf.Addr())}
 }
