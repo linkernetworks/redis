@@ -90,12 +90,16 @@ func (c *Connection) PubSub() *PubSubCommandContext {
 	return &PubSubCommandContext{c, "PUBSUB"}
 }
 
+func (c *Connection) ZSet(key string) *ZSet {
+	return NewZSet(c, key)
+}
+
 type PubSubCommandContext struct {
-	Connection *Connection
-	Command    string
+	*Connection
+	Command string
 }
 
 func (cc *PubSubCommandContext) NumSub(key string) (m map[string]int, err error) {
-	m, err = redis.IntMap(cc.Connection.Do(cc.Command, "NUMSUB", key))
+	m, err = redis.IntMap(cc.Do(cc.Command, "NUMSUB", key))
 	return m, err
 }

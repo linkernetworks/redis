@@ -7,7 +7,6 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
-// TODO refactor: add logger
 type Service struct {
 	Pool *redis.Pool
 }

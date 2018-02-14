@@ -32,10 +32,7 @@ func TestNewRedisZSet(t *testing.T) {
 	defer conn.Close()
 	rzset := NewZSet(conn, defaultTestQueue)
 	assert.NotNil(t, rzset)
-	assert.NotNil(t, rzset.rds)
-	// assert.NotNil(t, rzset.mtx)
 	assert.Equal(t, defaultTestQueue, rzset.key)
-	// TODO how to close connections
 }
 
 func TestZADD(t *testing.T) {
