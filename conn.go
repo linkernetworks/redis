@@ -87,7 +87,7 @@ func (c *Connection) KeepAlive(interval time.Duration) *time.Ticker {
 }
 
 func (c *Connection) PubSub() *PubSubCommandContext {
-	return &PubSubCommandContext{c, "PUBSUB"}
+	return &PubSubCommandContext{c, &redis.PubSubConn{c}}
 }
 
 func (c *Connection) ZSet(key string) *ZSet {
@@ -96,10 +96,10 @@ func (c *Connection) ZSet(key string) *ZSet {
 
 type PubSubCommandContext struct {
 	*Connection
-	Command string
+	*redis.PubSubConn
 }
 
 func (cc *PubSubCommandContext) NumSub(key string) (m map[string]int, err error) {
-	m, err = redis.IntMap(cc.Do(cc.Command, "NUMSUB", key))
+	m, err = redis.IntMap(cc.Do("PUBSUB", "NUMSUB", key))
 	return m, err
 }
