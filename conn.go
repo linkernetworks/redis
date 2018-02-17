@@ -79,7 +79,7 @@ func (c *Connection) KeepAlive(interval time.Duration) *time.Ticker {
 	go func() {
 		for t := range ticker.C {
 			if _, err := c.Ping(); err != nil {
-				log.Printf("redis: failed to ping error=%v at %s\n", t.String())
+				log.Printf("redis: failed to ping error=%v at %s\n", err, t.String())
 			}
 		}
 	}()
