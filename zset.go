@@ -37,11 +37,11 @@ func NewZSet(conn *Connection, key string) *ZSet {
 	}
 }
 
-// ZADD add an KV(score as key, member as value) to Redis.
+// Add add an KV(score as key, member as value) to Redis.
 // Return n means number of elements added to the sorted sets.
 // Return err if any error occured.
 // See https://redis.io/commands/zadd
-func (rz *ZSet) ZADD(score float64, member interface{}) (n int, err error) {
+func (rz *ZSet) Add(score float64, member interface{}) (n int, err error) {
 	// ZADD key [NX|XX] [CH] [INCR] score member [score member ...]
 	return redigo.Int(rz.Do("ZADD", rz.key, score, member))
 }

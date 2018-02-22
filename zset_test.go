@@ -50,7 +50,7 @@ func TestZADD(t *testing.T) {
 	any := AnyStruct{"abc123", time.Now(), types.ScoreHigh}
 	data, err := json.Marshal(any)
 	assert.Nil(t, err)
-	n, err := rzset.ZADD(any.Priority, data)
+	n, err := rzset.Add(any.Priority, data)
 	assert.Nil(t, err)
 	assert.Equal(t, 1, n)
 
@@ -80,7 +80,7 @@ func TestZRANGEBYSCORE(t *testing.T) {
 	for _, a := range arr {
 		data, err := json.Marshal(a)
 		assert.Nil(t, err)
-		_, err = rzset.ZADD(a.Priority, data)
+		_, err = rzset.Add(a.Priority, data)
 		assert.Nil(t, err)
 	}
 	// call and check
@@ -121,13 +121,13 @@ func TestLen(t *testing.T) {
 	a1 := AnyStruct{"a1", time.Now(), types.ScoreHigh}
 	data, err := json.Marshal(a1)
 	assert.Nil(t, err)
-	_, err = rzset.ZADD(a1.Priority, data)
+	_, err = rzset.Add(a1.Priority, data)
 	assert.Nil(t, err)
 
 	a2 := AnyStruct{"a2", time.Now(), types.ScoreMedium}
 	data2, err := json.Marshal(a2)
 	assert.Nil(t, err)
-	_, err = rzset.ZADD(a2.Priority, data2)
+	_, err = rzset.Add(a2.Priority, data2)
 	assert.Nil(t, err)
 
 	// call and check
@@ -156,7 +156,7 @@ func TestZREM(t *testing.T) {
 	a1 := AnyStruct{"a1", time.Now(), types.ScoreHigh}
 	data, err := json.Marshal(a1)
 	assert.Nil(t, err)
-	_, err = rzset.ZADD(a1.Priority, data)
+	_, err = rzset.Add(a1.Priority, data)
 	assert.Nil(t, err)
 
 	// call and check
@@ -187,7 +187,7 @@ func TestRemoveAll(t *testing.T) {
 	for _, a := range arr {
 		data, err := json.Marshal(a)
 		assert.NoError(t, err)
-		_, err = rzset.ZADD(a.Priority, data)
+		_, err = rzset.Add(a.Priority, data)
 		assert.NoError(t, err)
 	}
 	// call and check
@@ -218,7 +218,7 @@ func TestZPOP(t *testing.T) {
 	for _, a := range arr {
 		data, err := json.Marshal(a)
 		assert.Nil(t, err)
-		_, err = rzset.ZADD(a.Priority, data)
+		_, err = rzset.Add(a.Priority, data)
 		assert.Nil(t, err)
 	}
 
@@ -263,7 +263,7 @@ func TestQueryAll(t *testing.T) {
 	for _, a := range arr {
 		data, err := json.Marshal(a)
 		assert.Nil(t, err)
-		_, err = rzset.ZADD(a.Priority, data)
+		_, err = rzset.Add(a.Priority, data)
 		assert.Nil(t, err)
 	}
 
