@@ -94,6 +94,6 @@ func (rz *ZSet) ZPOP() (interface{}, error) {
 	return members[0], nil
 }
 
-func (rz *ZSet) QueryAll() (members []interface{}, err error) {
+func (rz *ZSet) All() (members []interface{}, err error) {
 	return redigo.Values(rz.Do("ZRANGEBYSCORE", rz.key, "-inf", "+inf"))
 }

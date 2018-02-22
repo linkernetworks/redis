@@ -268,7 +268,7 @@ func TestQueryAll(t *testing.T) {
 	}
 
 	// call and check
-	members, err := rzset.QueryAll()
+	members, err := rzset.All()
 	assert.Nil(t, err)
 	assert.Equal(t, 3, len(members))
 	// decode member to AnyStruct
