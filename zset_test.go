@@ -85,7 +85,7 @@ func TestZRANGEBYSCORE(t *testing.T) {
 	}
 	// call and check
 	min, max, offset, limit := types.ScoreHigh, types.ScoreLow, 0, 2
-	members, err := rzset.ZRANGEBYSCORE(min, max, offset, limit)
+	members, err := rzset.RangeByScore(min, max, offset, limit)
 	assert.Nil(t, err)
 	assert.Equal(t, limit, len(members))
 	// decode member to AnyStruct

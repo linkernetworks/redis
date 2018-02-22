@@ -46,9 +46,9 @@ func (rz *ZSet) Add(score float64, member interface{}) (n int, err error) {
 	return redigo.Int(rz.Do("ZADD", rz.key, score, member))
 }
 
-// ZRANGEBYSCORE ranges over ZSET ( where  min < score && score < max )
+// RangeByScore ranges over ZSET ( where  min < score && score < max )
 // See https://redis.io/commands/zrangebyscore
-func (rz *ZSet) ZRANGEBYSCORE(min, max float64, offset, limit int) (members []interface{}, err error) {
+func (rz *ZSet) RangeByScore(min, max float64, offset, limit int) (members []interface{}, err error) {
 	// ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]
 	return redigo.Values(rz.Do("ZRANGEBYSCORE", rz.key, min, max, "LIMIT", offset, limit))
 }
@@ -81,7 +81,7 @@ func (rz *ZSet) RemoveAll() (int, error) {
 // TODO benchmark
 // TODO need transaction?
 func (rz *ZSet) ZPOP() (interface{}, error) {
-	members, err := rz.ZRANGEBYSCORE(types.ScoreHigh, types.ScoreLow, 0, 1)
+	members, err := rz.RangeByScore(types.ScoreHigh, types.ScoreLow, 0, 1)
 	if err != nil {
 		return nil, err
 	}
