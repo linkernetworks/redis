@@ -76,11 +76,11 @@ func (rz *ZSet) RemoveAll() (int, error) {
 	return redigo.Int(rz.Do("ZREMRANGEBYSCORE", rz.key, "-inf", "+inf"))
 }
 
-// ZPOP pops a value from the ZSET key using ZRANGEBYSCORE/ZREM commands.
+// Pop pops a value from the ZSET key using ZRANGEBYSCORE/ZREM commands.
 // TODO sort by enque time
 // TODO benchmark
 // TODO need transaction?
-func (rz *ZSet) ZPOP() (interface{}, error) {
+func (rz *ZSet) Pop() (interface{}, error) {
 	members, err := rz.RangeByScore(types.ScoreHigh, types.ScoreLow, 0, 1)
 	if err != nil {
 		return nil, err

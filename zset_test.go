@@ -224,7 +224,7 @@ func TestZPOP(t *testing.T) {
 
 	assert.Equal(t, 3, rzset.Len())
 	// call and check
-	result, err := rzset.ZPOP()
+	result, err := rzset.Pop()
 	assert.Nil(t, err)
 
 	var a = AnyStruct{}
