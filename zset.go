@@ -62,11 +62,11 @@ func (rz *ZSet) Len() int {
 	return len
 }
 
-// ZREM removes one member from Redis ZSET
+// Remove removes one member from Redis ZSET
 // Return n means number of elements removed from the sorted sets.
 // Return err if any error occured.
 // See https://redis.io/commands/zrem
-func (rz *ZSet) ZREM(member interface{}) (int, error) {
+func (rz *ZSet) Remove(member interface{}) (int, error) {
 	return redigo.Int(rz.Do("ZREM", rz.key, member))
 }
 
@@ -88,7 +88,7 @@ func (rz *ZSet) ZPOP() (interface{}, error) {
 	if len(members) == 0 {
 		return nil, redigo.ErrNil
 	}
-	if _, err = rz.ZREM(members[0]); err != nil {
+	if _, err = rz.Remove(members[0]); err != nil {
 		return nil, err
 	}
 	return members[0], nil

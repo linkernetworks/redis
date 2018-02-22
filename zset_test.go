@@ -160,7 +160,7 @@ func TestZREM(t *testing.T) {
 	assert.Nil(t, err)
 
 	// call and check
-	n, err := rzset.ZREM(data)
+	n, err := rzset.Remove(data)
 	assert.Nil(t, err)
 	assert.Equal(t, 1, n)
 }
