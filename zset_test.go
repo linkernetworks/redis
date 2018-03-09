@@ -47,7 +47,7 @@ func TestZADD(t *testing.T) {
 	rzset := NewZSet(conn, defaultTestQueue)
 
 	// call and check
-	any := AnyStruct{"abc123", time.Now(), types.PriorityHigh}
+	any := AnyStruct{"abc123", time.Now(), types.PriorityHigh.AsFloat()}
 	data, err := json.Marshal(any)
 	assert.Nil(t, err)
 	n, err := rzset.Add(any.Priority, data)
@@ -73,9 +73,9 @@ func TestZRANGEBYSCORE(t *testing.T) {
 
 	// add 3 test data
 	arr := []AnyStruct{
-		AnyStruct{"a1", time.Now(), types.PriorityHigh},
-		AnyStruct{"a2", time.Now(), types.PriorityMedium},
-		AnyStruct{"a3", time.Now(), types.PriorityLow},
+		AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()},
+		AnyStruct{"a2", time.Now(), types.PriorityMedium.AsFloat()},
+		AnyStruct{"a3", time.Now(), types.PriorityLow.AsFloat()},
 	}
 	for _, a := range arr {
 		data, err := json.Marshal(a)
@@ -84,7 +84,7 @@ func TestZRANGEBYSCORE(t *testing.T) {
 		assert.Nil(t, err)
 	}
 	// call and check
-	min, max, offset, limit := types.PriorityHigh, types.PriorityLow, 0, 2
+	min, max, offset, limit := types.PriorityHigh.AsFloat(), types.PriorityLow.AsFloat(), 0, 2
 	members, err := rzset.RangeByScore(min, max, offset, limit)
 	assert.Nil(t, err)
 	assert.Equal(t, limit, len(members))
@@ -118,13 +118,13 @@ func TestLen(t *testing.T) {
 	assert.Equal(t, 0, rzset.Len())
 
 	// add some data
-	a1 := AnyStruct{"a1", time.Now(), types.PriorityHigh}
+	a1 := AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()}
 	data, err := json.Marshal(a1)
 	assert.Nil(t, err)
 	_, err = rzset.Add(a1.Priority, data)
 	assert.Nil(t, err)
 
-	a2 := AnyStruct{"a2", time.Now(), types.PriorityMedium}
+	a2 := AnyStruct{"a2", time.Now(), types.PriorityMedium.AsFloat()}
 	data2, err := json.Marshal(a2)
 	assert.Nil(t, err)
 	_, err = rzset.Add(a2.Priority, data2)
@@ -153,7 +153,7 @@ func TestZREM(t *testing.T) {
 	assert.Equal(t, 0, rzset.Len())
 
 	// add some data
-	a1 := AnyStruct{"a1", time.Now(), types.PriorityHigh}
+	a1 := AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()}
 	data, err := json.Marshal(a1)
 	assert.Nil(t, err)
 	_, err = rzset.Add(a1.Priority, data)
@@ -180,9 +180,9 @@ func TestRemoveAll(t *testing.T) {
 
 	// add some data
 	arr := []AnyStruct{
-		AnyStruct{"a1", time.Now(), types.PriorityHigh},
-		AnyStruct{"a2", time.Now(), types.PriorityHigh},
-		AnyStruct{"a3", time.Now(), types.PriorityHigh},
+		AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()},
+		AnyStruct{"a2", time.Now(), types.PriorityHigh.AsFloat()},
+		AnyStruct{"a3", time.Now(), types.PriorityHigh.AsFloat()},
 	}
 	for _, a := range arr {
 		data, err := json.Marshal(a)
@@ -211,9 +211,9 @@ func TestZPOP(t *testing.T) {
 
 	// add 3 test data
 	arr := []AnyStruct{
-		AnyStruct{"a2", time.Now(), types.PriorityMedium},
-		AnyStruct{"a1", time.Now(), types.PriorityHigh}, // highest priority
-		AnyStruct{"a3", time.Now(), types.PriorityLow},
+		AnyStruct{"a2", time.Now(), types.PriorityMedium.AsFloat()},
+		AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()}, // highest priority
+		AnyStruct{"a3", time.Now(), types.PriorityLow.AsFloat()},
 	}
 	for _, a := range arr {
 		data, err := json.Marshal(a)
@@ -256,9 +256,9 @@ func TestQueryAll(t *testing.T) {
 
 	// add 3 test data
 	arr := []AnyStruct{
-		AnyStruct{"a1", time.Now(), types.PriorityHigh},
-		AnyStruct{"a2", time.Now(), types.PriorityMedium},
-		AnyStruct{"a3", time.Now(), types.PriorityLow},
+		AnyStruct{"a1", time.Now(), types.PriorityHigh.AsFloat()},
+		AnyStruct{"a2", time.Now(), types.PriorityMedium.AsFloat()},
+		AnyStruct{"a3", time.Now(), types.PriorityLow.AsFloat()},
 	}
 	for _, a := range arr {
 		data, err := json.Marshal(a)
