@@ -81,7 +81,7 @@ func (rz *ZSet) RemoveAll() (int, error) {
 // TODO benchmark
 // TODO need transaction?
 func (rz *ZSet) Pop() (interface{}, error) {
-	members, err := rz.RangeByScore(types.ScoreHigh, types.ScoreLow, 0, 1)
+	members, err := rz.RangeByScore(types.PriorityHigh, types.PriorityLow, 0, 1)
 	if err != nil {
 		return nil, err
 	}
