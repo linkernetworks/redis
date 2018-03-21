@@ -16,6 +16,10 @@ func (c *Connection) SetWithExpire(key string, value interface{}, expire int) (r
 	return c.Do("SET", key, value, "EX", expire)
 }
 
+func (c *Connection) Delete(keys ...interface{}) (reply interface{}, err error) {
+	return c.Do("DEL", keys...)
+}
+
 func (c *Connection) Set(key string, value interface{}) (reply interface{}, err error) {
 	return c.Do("SET", key, value)
 }
