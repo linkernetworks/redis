@@ -3,7 +3,6 @@ package redis
 import (
 	"encoding/json"
 
-	"bitbucket.org/linkernetworks/aurora/src/config"
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -63,7 +62,7 @@ func NewWithPool(pool *redis.Pool) *Service {
 }
 
 // New allocates a redis service with a given redis config
-func New(cf *config.RedisConfig) *Service {
+func New(cf *RedisConfig) *Service {
 	if cf.Pool != nil {
 		return &Service{Pool: NewPoolFromConfig(cf)}
 	}

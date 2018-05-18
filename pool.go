@@ -1,12 +1,11 @@
 package redis
 
 import (
-	"bitbucket.org/linkernetworks/aurora/src/config"
 	"github.com/garyburd/redigo/redis"
 	"time"
 )
 
-func NewPoolFromConfig(cf *config.RedisConfig) *redis.Pool {
+func NewPoolFromConfig(cf *RedisConfig) *redis.Pool {
 	pool := redis.Pool{
 		// the default max idle settings
 		MaxIdle: 3,
