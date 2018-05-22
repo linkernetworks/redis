@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	redigo "github.com/garyburd/redigo/redis"
-
-	"bitbucket.org/linkernetworks/aurora/src/jobcontroller/types"
 )
 
 // constant error messages are used for i18n
@@ -80,9 +78,9 @@ func (rz *ZSet) RemoveAll() (int, error) {
 // TODO sort by enque time
 // TODO benchmark
 // TODO need transaction?
-func (rz *ZSet) Pop() (interface{}, error) {
+func (rz *ZSet) Pop(scoreMin, scoreMax float64) (interface{}, error) {
 	// TODO refactor: pass priority range as parameter
-	members, err := rz.RangeByScore(types.PriorityHigh.AsFloat(), types.PriorityLow.AsFloat(), 0, 1)
+	members, err := rz.RangeByScore(scoreMin, scoreMax, 0, 1)
 	if err != nil {
 		return nil, err
 	}
