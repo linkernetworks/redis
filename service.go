@@ -3,7 +3,7 @@ package redis
 import (
 	"encoding/json"
 
-	"github.com/garyburd/redigo/redis"
+	"github.com/gomodule/redigo/redis"
 )
 
 type Service struct {

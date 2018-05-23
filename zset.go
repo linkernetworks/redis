@@ -3,7 +3,7 @@ package redis
 import (
 	"errors"
 
-	redigo "github.com/garyburd/redigo/redis"
+	redigo "github.com/gomodule/redigo/redis"
 )
 
 // constant error messages are used for i18n
