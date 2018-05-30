@@ -10,17 +10,17 @@ Redis is a package integrating redisDB with redigo.
 ##### Example
 
 ```
-const redisConfig := *redis.RedisConfig{
+redisConfig := &redis.RedisConfig{
   Host: "localhost",
   Port: 6379, 
 }
 
 redisService := redis.New(redisConfig)
 
-conn := redis.GetConnection()
+conn := redisService.GetConnection()
 defer conn.Close()
 
-if err := conn.Set("key", "value"); err != nil {
+if _, err := conn.Set("key", "value"); err != nil {
   // handle err
 }
 
