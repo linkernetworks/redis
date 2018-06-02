@@ -3,6 +3,8 @@ Redis
 
 [![Build Status](https://travis-ci.org/linkernetworks/redis.svg?branch=master)](https://travis-ci.org/linkernetworks/redis)
 
+[![codecov](https://codecov.io/gh/linkernetworks/redis/branch/master/graph/badge.svg)](https://codecov.io/gh/linkernetworks/redis)
+
 Redis is a package integrating redisDB with redigo.
 
 # How to use
