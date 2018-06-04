@@ -3,10 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "w3QCCIYHgZzIXQ+xTl7oLfFrXHs=",
+			"path": "github.com/gomodule/redigo/internal",
+			"revision": "9352ab68be133885e31a43661cc42a220cb8e821",
+			"revisionTime": "2018-04-01T19:18:55Z"
+		},
+		{
 			"checksumSHA1": "HgOVOUtWUYHcNe8aipwuEZ7YLow=",
 			"path": "github.com/gomodule/redigo/redis",
 			"revision": "9352ab68be133885e31a43661cc42a220cb8e821",
 			"revisionTime": "2018-04-01T19:18:55Z"
+		},
+		{
+			"checksumSHA1": "8ejg/kxhpSBDPHteEQwFgLqbank=",
+			"path": "github.com/linkernetworks/serviceconfig",
+			"revision": "1a3a6c6228e3e958b2e42535ef173804470f0884",
+			"revisionTime": "2018-05-18T07:18:51Z"
 		}
 	],
 	"rootPath": "github.com/linkernetworks/redis"
