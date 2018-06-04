@@ -1,10 +1,11 @@
 package redis
 
 import (
-	"github.com/linkernetworks/serviceconfig"
 	"net"
 	"strconv"
 	"time"
+
+	"github.com/linkernetworks/serviceconfig"
 )
 
 type RedisPoolConfig struct {
@@ -28,6 +29,15 @@ type RedisConfig struct {
 	Pool *RedisPoolConfig `json:"pool"`
 
 	Public *RedisConfig `json:"public"`
+}
+
+func NewTestRedisService() *Service {
+	redisConfig := &RedisConfig{
+		Host: "localhost",
+		Port: 6379,
+	}
+
+	return New(redisConfig)
 }
 
 func (c *RedisConfig) Unresolved() bool {
