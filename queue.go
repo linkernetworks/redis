@@ -25,8 +25,8 @@ func (q *Queue) Dequeue(key string) (string, error) {
 }
 
 // Cleanup all data in specific key in queue
-func (q *Queue) RemoveAll(key string) (string, error) {
-	return redigo.String(q.Do("DEL", key, -1, 0))
+func (q *Queue) RemoveAll(key string) (int, error) {
+	return redigo.Int(q.Do("DEL", key, -1, 0))
 }
 
 func (q *Queue) Len(key string) (int, error) {
